@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Friend Finder</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <div>
+      <h2><i class="fab fa-wpforms"></i> Survey Questions</h2>
+      <hr>
+    </div>
+    <div>
+      <h3 class="mb-3 font-weight-bold">About You</h3>
+
+      <div class="form-group">
+        <label for="name"><h5>Name (Required)</h5></label>
+        <input type="text" class="form-control" id="name" />
+      </div>
+      <div class="form-group">
+        <label for="photo"><h5>Link to Photo Image (Required)</h5></label>
+        <input type="text" class="form-control" id="photo" />
+      </div>
+
+    </div>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-12">
+        <form id="surveyAnswers">
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 1</h5>
+            <h6>Your mind is always buzzing with unexplored ideas and plans.</h6>
+            <div id="divQ1">
+              <select class="custom-select form-control form-control-sm w-25 bg-light" id="q1">
+                <option selected>Select an Option</option>
+                <option value="1">1 (Strongly Disagree)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Strongly Agree)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 2</h5>
+            <h6>Generally speaking, you rely more on your experience than your imagination.</h6>
+            <div id="divQ2"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 3</h5>
+            <h6>You find it easy to stay relaxed and focused even when there is some pressure.</h6>
+            <div id="divQ3"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 4</h5>
+            <h6>You rarely do something just out of sheer curiosity.</h6>
+            <div id="divQ4"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 5</h5>
+            <h6>People can rarely upset you</h6>
+            <div id="divQ5"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 6</h5>
+            <h6>It is often difficult for you to relate to other people’s feelings.</h6>
+            <div id="divQ6"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 7</h5>
+            <h6>In a discussion, truth should be more important than people’s sensitivities.</h6>
+            <div id="divQ7"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 8</h5>
+            <h6>You rarely get carried away by fantasies and ideas.</h6>
+            <div id="divQ8"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 9</h5>
+            <h6>You think that everyone’s views should be respected regardless of whether they are supported by facts or not.</h6>
+            <div id="divQ9"></div>
+          </div>
+
+          <div class="mb-4">
+            <h5 class="font-weight-bold">Question 10</h5>
+            <h6>You feel more energetic after spending time with a group of people.</h6>
+            <div id="divQ10"></div>
+          </div>
+
+          <div><button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button></div>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+    <footer>
+      <div class="container mb-5">
+        <a href="/api/friends">API Friends List</a> |
+        <a href="/api/github">GitHub Repo</a>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="matchModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">We found your best match!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#divQ2, #divQ3, #divQ4, #divQ5, #divQ6, #divQ7, #divQ8, #divQ9, #divQ10").each(function(id) {
+        $(this).html($("#divQ1").html());
+        $(this).children("select").attr("id", "q" + (id + 2));
+      });
+    });
+
+    $("#submit").on("click", function(evt) {
+      event.preventDefault();
+
+      var scoresArr = [];
+      $("#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10").each(function(id) {
+        scoresArr.push($(this).val());
+      });
+
+      var newSurveyAnswers = {
+        name: $("#name").val().trim(),
+        photo: $("#photo").val().trim(),
+        scores: scoresArr
+      };
+
+      $.post("/api/friends", newSurveyAnswers).done(function(data) {
+
+        if (data) {
+          console.log(data);
+          var mymodal = $("#matchModal");
+          mymodal.modal("show");
+          mymodal.find('.modal-body').html("<p><strong>" + data.name + "</strong><img src='" + data.photo + "' alt='" + data.name + "' align='top'></p>");
+
+        } else {
+          alert("Oop! something went wrong. Please try again soon.");
+        }
+
+        $("#name").val("");
+        $("#photo").val("");
+        $("#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10").each(function() {
+          $(this).prop("selectedIndex", 0);
+        });
+      });
+
+    });
+  </script>
+
+
+</body>
+
+</html>
