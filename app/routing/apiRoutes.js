@@ -41,9 +41,4 @@ module.exports = function(app){
 
   });
 
-  function calcScoresDiff(scoreSet){
-    return
-  }
-
-
 }
