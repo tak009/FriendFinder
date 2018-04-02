@@ -6,11 +6,8 @@ module.exports = function(app){
   });
 
   app.post("/api/friends", function(req, res){
-    //This will be used to handle incoming survey results. This route will also be used to handle the compatibility logic.
-
     var s = req.body.scores;
     var matchScoresArr = [];
-
 
     req.body.scores = s.map((val, i, s) => {
       return parseInt(val);
@@ -18,7 +15,6 @@ module.exports = function(app){
 
     friendsData.forEach(function(answer){
       var userScores = answer.scores;
-
       var result = userScores.map(function (num, index){
         return Math.abs(num - req.body.scores[index]);
       });
@@ -32,13 +28,8 @@ module.exports = function(app){
     var friendIndex = matchScoresArr.indexOf(bestMatch);
     var friendMatch = friendsData[friendIndex];
 
-    console.log(matchScoresArr);
-    console.log(bestMatch);
-    console.log(friendMatch);
-
     friendsData.push(req.body);
     res.json(friendMatch);
 
   });
-
 }

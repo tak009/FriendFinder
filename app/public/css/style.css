@@ -1,0 +1,28 @@
+body {
+  background-image: url("../images/friends_rs.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% auto;
+}
+
+/* a {
+  color: #545454;
+} */
+
+.jt-color {
+  background: #737373;
+  color: #ffffff;
+}
+
+.btn-survey {
+  background: #e66352;
+  color: #ffffff;
+}
+
+.survey-card {
+  background-color: rgba(115,115,115, 0.5);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: #f9f9f9;
+}
