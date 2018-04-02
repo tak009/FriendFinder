@@ -8,8 +8,7 @@
   <title>Friend Finder</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -18,24 +17,24 @@
   <div class="container mt-4">
     <div class="card survey-card p-4">
       <div>
-        <h2><i class="fab fa-wpforms"></i> Survey Questions</h2>
+        <h2 class="survey-header"><i class="fab fa-wpforms"></i> Survey Questions</h2>
         <hr>
       </div>
       <div>
         <h3 class="mb-3 font-weight-bold">About You</h3>
-        <form class="needs-validation" novalidate>
-          <div class="form-group">
-            <label for="name"><h5>Name (Required)</h5></label>
-            <input type="text" class="form-control" id="name" required>
+        <!-- <form class="needs-validation" novalidate> -->
+        <div class="form-group">
+          <label for="name"><h5>Name (Required)</h5></label>
+          <input type="text" class="form-control" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="photo"><h5>Link to Photo Image (Required)</h5></label>
+          <input type="text" class="form-control" id="photo" required>
+          <div class="invalid-feedback">
+            Please enter your name.
           </div>
-          <div class="form-group">
-            <label for="photo"><h5>Link to Photo Image (Required)</h5></label>
-            <input type="text" class="form-control" id="photo" required>
-            <div class="invalid-feedback">
-              Please enter your name.
-            </div>
-          </div>
-        </form>
+        </div>
+        <!-- </form> -->
       </div>
       <hr>
 
@@ -111,20 +110,14 @@
               <div id="divQ10"></div>
             </div>
 
-            <div><button type="submit" class="btn btn-lg btn-survey" id="submit">Submit</button></div>
+            <div><button type="submit" class="btn btn-lg btn-survey" id="submitSurvey">Submit</button></div>
           </form>
         </div>
       </div>
 
       <hr>
-      <footer>
-        <div class="container mb-5">
-          <a href="/api/friends">API Friends List</a> |
-          <a href="https://github.com/tak009/FriendFinder" target="_blank">GitHub Repo</a>
-        </div>
-      </footer>
 
-      <div class="modal fade" id="matchModal">
+      <div class="modal fade text-dark" id="matchModal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -160,51 +153,63 @@
           </div>
         </div>
       </div>
+
+      <footer>
+        <div class="container mb-5">
+          <a href="/">Home</a> |
+          <a href="/api/friends">API Friends List</a> |
+          <a href="https://github.com/tak009/FriendFinder" target="_blank">GitHub Repo</a>
+        </div>
+      </footer>
     </div>
   </div>
 
   <script>
     $(document).ready(function() {
+      console.log("ready");
       $("#divQ2, #divQ3, #divQ4, #divQ5, #divQ6, #divQ7, #divQ8, #divQ9, #divQ10").each(function(id) {
         $(this).html($("#divQ1").html());
         $(this).children("select").attr("id", "q" + (id + 2));
       });
-    });
 
-    $("#submit").on("click", function(evt) {
-      event.preventDefault();
+      $("#submitSurvey").on("click", function(event) {
+        event.preventDefault();
 
-      var scoresArr = [];
-      $("#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10").each(function(id) {
-        scoresArr.push($(this).val());
-      });
+        var scoresArr = [];
+        var newSurveyAnswers = {};
 
-      var newSurveyAnswers = {
-        name: $("#name").val().trim(),
-        photo: $("#photo").val().trim(),
-        scores: scoresArr
-      };
+        $("#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10").each(function(id) {
+          if ($(this).val() !== "Select an Option") {
+            scoresArr.push($(this).val());
+          }
+        });
 
-      $.post("/api/friends", newSurveyAnswers).done(function(data) {
-        if (data) {
-          var mymodal = $("#matchModal");
-          mymodal.modal("show");
-          mymodal.find('.modal-body').html("<p><strong>" + data.name + "</strong><img src='" + data.photo + "' alt='" + data.name + "' align='top'></p>");
-
+        if ($("#name").val() !== "" && $("#photo").val() !== "" && scoresArr.length === 10) {
+          newSurveyAnswers = {
+            name: $("#name").val().trim(),
+            photo: $("#photo").val().trim(),
+            scores: scoresArr
+          };
         } else {
-          $("#failModal").modal("show");
+          alert("Please answer all questions");
         }
 
-        $("#name").val("");
-        $("#photo").val("");
-        $("#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10").each(function() {
-          $(this).prop("selectedIndex", 0);
+        $.post("/api/friends", newSurveyAnswers).done(function(data) {
+          if (data) {
+            $("#matchModal").modal("show").find('.modal-body').html("<p><b>" + data.name + "</b><img src='" + data.photo + "' alt='" + data.name + "' align='top'></p>");
+          } else {
+            $("#failModal").modal("show");
+          }
+
+          $("#name").val("");
+          $("#photo").val("");
+          $("#q1, #q2, #q3, #q4, #q5, #q6, #q7, #q8, #q9, #q10").each(function() {
+            $(this).prop("selectedIndex", 0);
+          });
         });
       });
     });
   </script>
-
-
 </body>
 
 </html>
